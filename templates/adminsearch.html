@@ -168,7 +168,7 @@
           <td>{{ file_info.description }}</td>
           <td>
             {% if file_info.blob_url %}
-            {% if file_info.blob_url.endswith('.jpg') or file_info.blob_url.endswith('.jpeg') or file_info.blob_url.endswith('.png') or file_info.blob_url.endswith('.gif') %}
+            {% if file_info.blob_url.endswith('.jpg') or file_info.blob_url.endswith('.jpeg') or file_info.blob_url.endswith('.png') or file_data[0].endswith('.webp') or file_info.blob_url.endswith('.gif') %}
               <img src="{{ file_info.blob_url }}" width="200">
             {% elif file_info.blob_url.endswith('.mp4') or file_info.blob_url.endswith('.avi') or file_info.blob_url.endswith('.mov') %}
               <video src="{{ file_info.blob_url }}" width="400" controls>
