@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>register</title>
+  <style>
+    ul.navbar {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      background-color: #f1f1f1;
+      display: flex;
+      align-items: center;
+      
+    }
+
+    ul.navbar li {
+      margin-right: 10px;
+    }
+
+    ul.navbar li:first-child {
+      margin-left: 10px;
+    }
+
+    ul.navbar li:last-child {
+      margin-right: 0;
+      margin-left: auto;
+    }
+
+    ul.navbar li a {
+      display: inline-block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    ul.navbar li a:hover {
+      background-color: #ddd;
+    }
+
+    body {
+      width: 100%;
+      display: flex;
+      z-index: 100;
+      overflow: auto;
+      box-shadow: 5px 5px 10px 0px #d4d4d4;
+      min-height: 100vh;
+      align-items: center;
+      border-color: var(--dl-color-gray-black);
+      border-width: 1px;
+      flex-direction: column;
+      background-image: linear-gradient(315deg, rgb(189, 195, 199) 0.00%,rgb(41, 86, 193) 40.00%,rgb(193, 41, 41) 100.00%);
+    }
+
+    .login-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .login-container input[type="submit"] {
+      margin-right: 10px;
+    }
+
+    .register-title {
+    background-color:  #f1f1f1;
+    text-align: center;
+    padding: 10px;
+    border-style: inset;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 12px;
+    padding: 5px;
+    }
+  </style>  
+</head>
+  <body>
+    <ul class="navbar">
+      <li>
+        <div data-thq="thq-navbar-nav" class="home-desktop-menu">
+          <nav class="home-links">
+            <li style="margin-left: auto; margin-right: auto;">
+              <a href="adminhome.html" class="home-navlink1">Home</a>
+              <a href="adminsearch.html" class="home-navlink2">Search</a>
+              <a href="adminuploaddate.html" class="home-navlink2">Upload File</a>
+              <a href="adminregister.html" class="home-navlink2">Register</a>
+            </li>
+          </nav>
+        </div>
+      </li>
+      <li>
+        <div class="login-container">
+          <form action="home.html">
+              <input type="submit" value="SignOut">
+            </form>
+        </div>
+      </li>
+    </ul>
+    
+    <div class="register-title">
+      <h1>Register</h1>
+      <form action="adminregister.html" method="POST">
+
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" placeholder="username"><br><br>
+
+          <label for="password">Password:</label>
+          <input type="text" id="password" name="password" placeholder="password"><br><br>
+
+          <label for="role">Role:</label>
+          <select id="role" name="role">
+              <option value="admin">Admin</option>
+              <option value="teacher">Teacher</option>
+          </select><br><br>
+
+          <label for="nickname">Nickname:</label>
+          <input type="text" id="nickname" name="nickname" placeholder="nickname"><br><br>
+          <input type="submit" value="Register" name="Register">
+
+        <h2>Account List</h2>
+        <table>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Password</th>
+              <th>Nickname</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+          {% for user in users %}
+            <tr>
+              <td>{{ user[4] }}</td>
+              <td>{{ user[0] }}</td>
+              <td>{{ user[1] }}</td>
+              <td>{{ user[2] }}</td>
+              <td>{{ user[3] }}</td>
+                <td>
+                  <form action="/delete_user" method="post">
+                    <input type="hidden" name="id" value="{{ user[4] }}">
+                    <input type="submit" value="Delete" name="Delete">
+                  </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>search</title>
+  <style>
+    ul.navbar {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      background-color: #f1f1f1;
+      display: flex;
+      align-items: center;
+    }
+
+    ul.navbar li {
+      margin-right: 10px;
+    }
+
+    ul.navbar li:first-child {
+      margin-left: 10px;
+    }
+
+    ul.navbar li:last-child {
+      margin-right: 0;
+      margin-left: auto;
+    }
+
+    ul.navbar li a {
+      display: inline-block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    ul.navbar li a:hover {
+      background-color: #ddd;
+    }
+
+    body {
+      width: 100%;
+      display: flex;
+      z-index: 100;
+      overflow: auto;
+      box-shadow: 5px 5px 10px 0px #d4d4d4;
+      min-height: 100vh;
+      align-items: center;
+      border-color: var(--dl-color-gray-black);
+      border-width: 1px;
+      flex-direction: column;
+      background-image: linear-gradient(315deg, rgb(189, 195, 199) 0.00%,rgb(41, 86, 193) 40.00%,rgb(193, 41, 41) 100.00%);
+    }
+
+    .login-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"],
+    .login-container input[type="submit"] {
+      margin-right: 10px;
+    }
+    * {
+      box-sizing: border-box;
+    }
+
+    form.example input[type=text] {
+      padding: 10px;
+      font-size: 17px;
+      border: 1px solid grey;
+      float: left;
+      width: 80%;
+      background: #f1f1f1;
+    }
+
+    form.example button {
+      float: left;
+      width: 20%;
+      padding: 10px;
+      background: #2196F3;
+      color: white;
+      font-size: 17px;
+      border: 1px solid grey;
+      border-left: none; 
+      cursor: pointer;
+    }
+
+    form.example button:hover {
+      background: #0b7dda;
+    }
+
+    form.example::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    .search-title {
+    background-color:  #f1f1f1;
+    text-align: center;
+    padding: 10px;
+    border-style: inset;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 12px;
+    padding: 5px;
+    }
+  </style>  
+</head>
+<body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <ul class="navbar">
+    <li>
+      <div data-thq="thq-navbar-nav" class="home-desktop-menu">
+        <nav class="home-links">
+          <li style="margin-left: auto; margin-right: auto;">
+            <a href="home.html" class="home-navlink1">Home</a>
+            <a href="search.html" class="home-navlink2">Search</a>
+          </li>
+        </nav>
+      </div>
+    </li>
+    <li>
+      <form method="POST" action="/">
+        <div class="login-container">
+          <input type="text" id="username" name="username" placeholder="username">
+          <input type="password" id="password" name="password" placeholder="password">
+          <input type="submit" value="login">
+        </div>
+      </form>
+    </li>
+  </ul>
+
+  <form class="example" method="POST" action="{{ url_for('search_page') }}">
+    <input type="text" placeholder="Search.." name="searchname">
+    <button type="submit" name="searchbtn"><i class="fa fa-search"></i></button>
+  </form>
+
+  <div class="search-title">
+    <h1>Search Results</h1>
+    <table>
+      <tr>
+        <th>Nickname</th>
+        <th>Date</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Preview</th>
+      </tr>
+      {% for file_info in final_results %}
+      <tr>
+        <td>{{ file_info.nickname }}</td>
+        <td>{{ file_info.date }}</td>
+        <td>{{ file_info.title }}</td>
+        <td>{{ file_info.description }}</td>
+        <td>
+          {% if file_info.blob_url %}
+          {% if file_info.blob_url.endswith('.jpg') or file_info.blob_url.endswith('.jpeg') or file_info.blob_url.endswith('.png') or file_info.blob_url.endswith('.gif') %}
+            <img src="{{ file_info.blob_url }}" width="200">
+          {% elif file_info.blob_url.endswith('.mp4') or file_info.blob_url.endswith('.avi') or file_info.blob_url.endswith('.mov') %}
+            <video src="{{ file_info.blob_url }}" width="400" controls>
+              Your browser does not support the video tag.
+            </video>
+          {% else %}
+            Preview not available.
+          {% endif %}
+        {% else %}
+          File not found.
+        {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+</body>
+</html>
